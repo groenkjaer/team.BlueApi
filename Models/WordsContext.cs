@@ -14,6 +14,6 @@ namespace team.BlueApi.Models
             Database.EnsureCreated();
         }
 
-        public DbSet<Words>? Words { get; set; }
+        public DbSet<Words> Words { get; set; } = null!;
     }
 }
