@@ -9,9 +9,6 @@ namespace team.BlueApi.Models
     public class ResponseWords
     {
         public int DistinctUniqueWords { get; init; }
-        public ResponseWords(int distinctUniqueWords)
-        {
-            DistinctUniqueWords = distinctUniqueWords;
-        }
+        public List<Watchlist>? WatchlistWords { get; set; }
     }
 }

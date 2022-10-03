@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using team.BlueApi.Models;
 
@@ -23,13 +22,13 @@ namespace team.BlueApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody]ReceivedWords receivedWords)
+        public async Task<ActionResult> Post([FromBody] ReceivedWords receivedWords)
         {
             if (receivedWords.Text == null)
                 return BadRequest();
 
             // Ignore case and remove nonletter characters
-            string recWordsCleaned = new (receivedWords.Text.ToLower().Where(c => !char.IsPunctuation(c)).ToArray());
+            string recWordsCleaned = new(receivedWords.Text.ToLower().Where(c => !char.IsPunctuation(c)).ToArray());
 
             List<string>? distinctWords = recWordsCleaned.Split(" ", StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
 
@@ -40,7 +39,18 @@ namespace team.BlueApi.Controllers
             await _context.Words.AddRangeAsync(distinctWords.Select(word => new Words() { Text = word }));
             await _context.SaveChangesAsync();
 
-            return Ok(new ResponseWords(distinctWords.Count));
+            // Get watchlist words
+            List<string?> watchlist = _context.Watchlist.Select(q => q.WatchedWord).ToList();
+
+            // Compare the two lists with intersect
+            List<string?> result = distinctWords.Intersect(watchlist).ToList();
+
+
+            return Ok(new ResponseWords()
+            {
+                DistinctUniqueWords = distinctWords.Count,
+                WatchlistWords = result.Select(q => new Watchlist() { WatchedWord = q }).ToList()
+            });
         }
     }
 }
