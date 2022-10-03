@@ -15,5 +15,6 @@ namespace team.BlueApi.Models
         }
 
         public DbSet<Words> Words { get; set; } = null!;
+        public DbSet<Watchlist> Watchlist { get; set; } = null!;
     }
 }
