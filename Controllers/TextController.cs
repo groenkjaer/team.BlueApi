@@ -40,7 +40,7 @@ namespace team.BlueApi.Controllers
             await _context.Words.AddRangeAsync(distinctWords.Select(word => new Words() { Text = word }));
             await _context.SaveChangesAsync();
 
-            return Ok(distinctWords.Count);
+            return Ok(new ResponseWords(distinctWords.Count));
         }
     }
 }
