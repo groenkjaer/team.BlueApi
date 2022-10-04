@@ -37,10 +37,10 @@ namespace team.BlueApi.Controllers
             await _context.SaveChangesAsync();
 
             // Get watchlist words
-            List<string?> watchlist = _context.Watchlist.Select(q => q.WatchedWord).ToList();
+            List<string> watchlist = _context.Watchlist.Select(q => q.WatchedWord!.ToLower()).ToList();
 
             // Compare the two lists with intersect
-            List<string?> result = distinctWords.Intersect(watchlist).ToList();
+            List<string> result = distinctWords.Intersect(watchlist).ToList();
 
 
             return Ok(new ResponseWords()
