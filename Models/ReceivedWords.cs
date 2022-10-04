@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using team.BlueApi.Attributes;
 
 namespace team.BlueApi.Models
 {
     public class ReceivedWords
     {
-        public string? Text { get; set; }
+        [MaxLengthSubstring(100)]
+        public string Text { get; set; } = null!;
     }
 }
