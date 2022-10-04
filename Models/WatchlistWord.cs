@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace team.BlueApi.Models
 {
-    public class Watchlist
+    public class WatchlistWord
     {
         [Key]
         [MaxLength(100)]

@@ -24,9 +24,6 @@ namespace team.BlueApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] ReceivedWords receivedWords)
         {
-            if (receivedWords.Text == null)
-                return BadRequest();
-
             // Ignore case and remove nonletter characters
             string recWordsCleaned = new(receivedWords.Text.ToLower().Where(c => !char.IsPunctuation(c)).ToArray());
 
@@ -49,7 +46,7 @@ namespace team.BlueApi.Controllers
             return Ok(new ResponseWords()
             {
                 DistinctUniqueWords = distinctWords.Count,
-                WatchlistWords = result.Select(q => new Watchlist() { WatchedWord = q }).ToList()
+                WatchlistWords = result.Select(q => new WatchlistWord() { WatchedWord = q }).ToList()
             });
         }
     }
