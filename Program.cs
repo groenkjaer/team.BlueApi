@@ -10,10 +10,6 @@ builder.Services.AddDbContext<WordsContext>(options => options.UseSqlServer(buil
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-
-app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
